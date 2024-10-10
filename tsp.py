@@ -25,7 +25,6 @@ MUTATION_PROBABILITY = 0.5
 # Define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 
 
@@ -50,7 +49,6 @@ generation_counter = itertools.count(start=1)  # Start the counter at 1
 
 
 # Create Initial Population
-# TODO:- use some heuristic like Nearest Neighbour our Convex Hull to initialize
 population = generate_random_population(cities_locations, POPULATION_SIZE)
 best_fitness_values = []
 best_solutions = []
@@ -85,7 +83,7 @@ while running:
     draw_plot(screen, list(range(len(best_fitness_values))),
               best_fitness_values, y_label="Fitness - Distance (pxls)")
 
-    draw_cities(screen, cities_locations, city_names, RED, NODE_RADIUS)
+    draw_cities(screen, cities_locations, city_names, NODE_RADIUS)
     draw_paths(screen, best_solution, BLUE, width=5)
     draw_paths(screen, population[1], rgb_color=(128, 128, 128), width=1)
 
@@ -95,15 +93,10 @@ while running:
 
     while len(new_population) < POPULATION_SIZE:
 
-        # selection
-        # simple selection based on first 10 best solutions
-        # parent1, parent2 = random.choices(population[:10], k=2)
-
         # solution based on fitness probability
         probability = 1 / np.array(population_fitness)
         parent1, parent2 = random.choices(population, weights=probability, k=2)
 
-        # child1 = order_crossover(parent1, parent2)
         child1 = order_crossover(parent1, parent1)
 
         child1 = mutate(child1, MUTATION_PROBABILITY)
@@ -115,8 +108,6 @@ while running:
     pygame.display.flip()
     clock.tick(FPS)
 
-
-# TODO: save the best individual in a file if it is better than the one saved.
 
 # exit software
 pygame.quit()

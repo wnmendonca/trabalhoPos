@@ -1,5 +1,4 @@
 
-
 import random
 import math
 import copy 
@@ -8,9 +7,7 @@ from typing import List, Tuple
 def generate_random_population(cities_location: List[Tuple[float, float]], population_size: int) -> List[List[Tuple[float, float]]]:
     """
     Generate a population of routes for a given set of cities.
-
     """
-
      # A primeira cidade é (0, 0)
     cidade_inicial = cities_location[0]  # Supondo que (0, 0) esteja na posição 0
     outras_cidades = cities_location[1:]  # Todas as outras cidades
@@ -28,26 +25,12 @@ def generate_random_population(cities_location: List[Tuple[float, float]], popul
 def calculate_distance(point1: Tuple[float, float], point2: Tuple[float, float]) -> float:
     """
     Calculate the Euclidean distance between two points.
-
-    Parameters:
-    - point1 (Tuple[float, float]): The coordinates of the first point.
-    - point2 (Tuple[float, float]): The coordinates of the second point.
-
-    Returns:
-    float: The Euclidean distance between the two points.
     """
     return math.sqrt((point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2)
 
 def calculate_fitness(path: List[Tuple[float, float]]) -> float:
     """
     Calculate the fitness of a given path based on the total Euclidean distance.
-
-    Parameters:
-    - path (List[Tuple[float, float]]): A list of tuples representing the path,
-      where each tuple contains the coordinates of a point.
-
-    Returns:
-    float: The total Euclidean distance of the path.
     """
     distance = 0
     n = len(path)
@@ -59,13 +42,6 @@ def calculate_fitness(path: List[Tuple[float, float]]) -> float:
 def order_crossover(parent1: List[Tuple[float, float]], parent2: List[Tuple[float, float]]) -> List[Tuple[float, float]]:
     """
     Perform order crossover (OX) between two parent sequences to create a child sequence.
-
-    Parameters:
-    - parent1 (List[Tuple[float, float]]): The first parent sequence.
-    - parent2 (List[Tuple[float, float]]): The second parent sequence.
-
-    Returns:
-    List[Tuple[float, float]]: The child sequence resulting from the order crossover.
     """
     length = len(parent1)
 
@@ -88,13 +64,6 @@ def order_crossover(parent1: List[Tuple[float, float]], parent2: List[Tuple[floa
 def mutate(solution:  List[Tuple[float, float]], mutation_probability: float) ->  List[Tuple[float, float]]:
     """
     Mutate a solution by inverting a segment of the sequence with a given mutation probability.
-
-    Parameters:
-    - solution (List[int]): The solution sequence to be mutated.
-    - mutation_probability (float): The probability of mutation for each individual in the solution.
-
-    Returns:
-    List[int]: The mutated solution sequence.
     """
     mutated_solution = copy.deepcopy(solution)
 
@@ -116,13 +85,6 @@ def mutate(solution:  List[Tuple[float, float]], mutation_probability: float) ->
 def sort_population(population: List[List[Tuple[float, float]]], fitness: List[float]) -> Tuple[List[List[Tuple[float, float]]], List[float]]:
     """
     Sort a population based on fitness values.
-
-    Parameters:
-    - population (List[List[Tuple[float, float]]]): The population of solutions, where each solution is represented as a list.
-    - fitness (List[float]): The corresponding fitness values for each solution in the population.
-
-    Returns:
-    Tuple[List[List[Tuple[float, float]]], List[float]]: A tuple containing the sorted population and corresponding sorted fitness values.
     """
     # Combine lists into pairs
     combined_lists = list(zip(population, fitness))
@@ -133,58 +95,5 @@ def sort_population(population: List[List[Tuple[float, float]]], fitness: List[f
     # Separate the sorted pairs back into individual lists
     sorted_population, sorted_fitness = zip(*sorted_combined_lists)
 
-    return sorted_population, sorted_fitness
-
-
-if __name__ == '__main__':
-    N_CITIES = 10
-    
-    POPULATION_SIZE = 100
-    N_GENERATIONS = 100
-    MUTATION_PROBABILITY = 0.3
-    cities_locations = [(random.randint(0, 100), random.randint(0, 100))
-              for _ in range(N_CITIES)]
-    
-    # CREATE INITIAL POPULATION
-    population = generate_random_population(cities_locations, POPULATION_SIZE)
-
-    # Lists to store best fitness and generation for plotting
-    best_fitness_values = []
-    best_solutions = []
-    
-    for generation in range(N_GENERATIONS):
-  
-        
-        population_fitness = [calculate_fitness(individual) for individual in population]    
-        
-        population, population_fitness = sort_population(population,  population_fitness)
-        
-        best_fitness = calculate_fitness(population[0])
-        best_solution = population[0]
-           
-        best_fitness_values.append(best_fitness)
-        best_solutions.append(best_solution)    
-
-        print(f"Generation {generation}: Best fitness = {best_fitness}")
-
-        new_population = [population[0]]  # Keep the best individual: ELITISM
-        
-        while len(new_population) < POPULATION_SIZE:
-            
-            # SELECTION
-            parent1, parent2 = random.choices(population[:10], k=2)  # Select parents from the top 10 individuals
-            
-            # CROSSOVER
-            child1 = order_crossover(parent1, parent2)
-            
-            ## MUTATION
-            child1 = mutate(child1, MUTATION_PROBABILITY)
-            
-            new_population.append(child1)
-            
-    
-        print('generation: ', generation)
-        population = new_population
-    
-
+    return sorted_population, sorted_fitness    
 
