@@ -1,4 +1,4 @@
-#  Problema de irrigação de plantas usando algoritmo Genético
+#  Problema de irrigação de plantas usando Algoritmo Genético
 
 Este repositório contém uma implementação Python de um solucionador de irrigação de jardim usando um algoritmo genético (GA) com base no Caixeiro Viajante.
 Usamos como parametro o algoritmo apresentado em aula pelo professor com alguns ajustes
@@ -11,6 +11,7 @@ Usamos como parametro o algoritmo apresentado em aula pelo professor com alguns 
 - **genetic_algorithm.py**: Contém a implementação do Algoritmo Genético, incluindo funções para gerar populações, calcular a fitness, realizar operações de cruzamento e mutação e classificar populações com base na fitness.
 - **tsp.py**: Implementa o TSP principal usando Pygame para visualização. Ele inicializa o problema, cria a população inicial e evolui iterativamente a população enquanto visualiza a melhor solução encontrada até o momento.
 - **draw_functions.py**: Fornece funções para desenhar usando Pygame.
+- **dados.py**: Contém a lista de pontos das localizações das arvores bem como a lista com o nome descritivo de cada uma delas.
 
 ## Usage
 

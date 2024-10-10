@@ -69,7 +69,28 @@ def draw_paths(screen: pygame.Surface, path: List[Tuple[int, int]], rgb_color: T
     """
     Draw a path on a Pygame screen.
     """
+    #pygame.draw.lines(screen, rgb_color, True, path, width=width)
+
+    font = pygame.font.Font(None, 24)  # Define a font for numbering the path
+
+    # Desenhar as linhas que conectam os pontos (cidades)
     pygame.draw.lines(screen, rgb_color, True, path, width=width)
+
+    # Para cada ponto do caminho, desenhar o número correspondente
+    for i in range(len(path)):
+        next_i = (i + 1) % len(path)  # Para conectar o último ao primeiro
+        midpoint = (
+            (path[i][0] + path[next_i][0]) // 2,
+            (path[i][1] + path[next_i][1]) // 2,
+        )
+
+        # Ajustar a posição para deslocar o número um pouco para cima da linha
+        number_position = (midpoint[0], midpoint[1] - 10)  # Deslocar 10 pixels para cima
+
+        # Renderizar o número próximo à linha
+        number_surface = font.render(str(i + 1), True, (255, 0, 0))  # Números em vermelho
+        number_rect = number_surface.get_rect(center=number_position)
+        screen.blit(number_surface, number_rect)
 
 
 
