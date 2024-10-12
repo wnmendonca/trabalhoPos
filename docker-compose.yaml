@@ -1,0 +1,8 @@
+services:
+  streamlit:
+    container_name: "challenge-2iadt"
+    build:
+      dockerfile: ./Dockerfile
+      context: ./
+    ports:
+      - '8501:8501'
